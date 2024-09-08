@@ -2,7 +2,6 @@ package com.ordereart.OrderEat.controller;
 
 import com.ordereart.OrderEat.dto.request.TotalRequest;
 import com.ordereart.OrderEat.dto.response.ApiResponse;
-import com.ordereart.OrderEat.dto.response.TotalResponse;
 import com.ordereart.OrderEat.entity.Total;
 import com.ordereart.OrderEat.repository.TotalRepository;
 import com.ordereart.OrderEat.service.TotalService;
@@ -22,8 +21,8 @@ public class TotalController {
     TotalService totalService;
 
     @PostMapping
-    ApiResponse<TotalResponse> create(@RequestBody @Valid TotalRequest request){
-        return ApiResponse.<TotalResponse>builder()
+    ApiResponse<Total> create(@RequestBody @Valid TotalRequest request){
+        return ApiResponse.<Total>builder()
                 .result(totalService.create(request))
                 .build();
     }
@@ -33,4 +32,18 @@ public class TotalController {
         return ApiResponse.<List<Total>>builder()
                 .result(totalService.getAlTotal()).build();
     }
+
+    @GetMapping("/{totalId}")
+    ApiResponse<Total> getById(@PathVariable("totalId") int id){
+        return ApiResponse.<Total>builder()
+                .result(totalService.getTotalById(id)).build();
+    }
+
+    @DeleteMapping("/{totalId}")
+    ApiResponse<String> delete(@PathVariable("totalId") int id){
+        return ApiResponse.<String>builder()
+                .result("Has been deleted !")
+                .build();
+    }
+
 }

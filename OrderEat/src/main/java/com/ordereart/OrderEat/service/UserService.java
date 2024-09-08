@@ -63,15 +63,15 @@ public class UserService
     }
 
     //Delete
-    public User deleteUser(int id){
+    public void deleteUser(int id){
         userRepository.deleteById(id);
-        return null;
     }
 
+    //Update User - Menu
     public User updateUserMenus(int userId, List<Integer> menuIds) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new AppException(ErrorCode.NOTFOUND));
 
         Set<Menu> menus = new HashSet<>(menuRepository.findAllById(menuIds));
 

@@ -3,7 +3,6 @@ package com.ordereart.OrderEat.controller;
 import com.ordereart.OrderEat.dto.request.UserRequest;
 import com.ordereart.OrderEat.dto.request.UserUpdateRequest;
 import com.ordereart.OrderEat.dto.response.ApiResponse;
-import com.ordereart.OrderEat.dto.response.UserResponse;
 import com.ordereart.OrderEat.entity.Menu;
 import com.ordereart.OrderEat.entity.User;
 import com.ordereart.OrderEat.repository.MenuRepository;
@@ -60,9 +59,9 @@ public class UserController {
 
     //Delete User by Id
     @DeleteMapping("/{userId}")
-    ApiResponse<User> deleteUser(@PathVariable("userId") int id){
-        return ApiResponse.<User>builder()
-                .result(userService.deleteUser(id))
+    ApiResponse<String> deleteUser(@PathVariable("userId") int id){
+        return ApiResponse.<String>builder()
+                .result("Has been deleted !")
                 .build();
     }
 

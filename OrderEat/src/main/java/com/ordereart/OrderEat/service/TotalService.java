@@ -1,13 +1,11 @@
 package com.ordereart.OrderEat.service;
 
 import com.ordereart.OrderEat.dto.request.TotalRequest;
-import com.ordereart.OrderEat.dto.response.TotalResponse;
 import com.ordereart.OrderEat.entity.Total;
 import com.ordereart.OrderEat.entity.User;
 import com.ordereart.OrderEat.exception.AppException;
 import com.ordereart.OrderEat.exception.ErrorCode;
 import com.ordereart.OrderEat.mapper.TotalMapper;
-import com.ordereart.OrderEat.repository.MenuRepository;
 import com.ordereart.OrderEat.repository.TotalRepository;
 import com.ordereart.OrderEat.repository.UserRepository;
 import lombok.AccessLevel;
@@ -27,32 +25,27 @@ public class TotalService {
     TotalMapper totalMapper;
     TotalRepository totalRepository;
     UserRepository userRepository;
-    MenuRepository menuRepository;
 
-    public TotalResponse create(TotalRequest request){
-        User user = userRepository.findById(Integer.valueOf(request.getUserId()))
-                                  .orElseThrow(()-> new AppException(ErrorCode.NOTFOUND));
+    public Total create(TotalRequest request){
 
         Total total = totalMapper.toTotal(request);
 
-//        Set<Integer> userId = request.getUserId().stream()
-//                                     .map(Integer::valueOf)
-//                                     .collect(Collectors.toSet());
-//
-//        List<User> users = userRepository.findAllById(userId);
-//
-//        for (Menu menu : menus) {
-//            Total totals = new Total();
-//            totals.setName(request.getName());
-//            totals.setUser(user);
-//            total = totalRepository.save(totals);
-//        }
+        Set<Integer> userId = request.getUserId().stream()
+                                     .map(Integer::valueOf)
+                                     .collect(Collectors.toSet());
 
-        total.setUser(user);
+        List<User> users = userRepository.findAllById(userId);
+
+        for (User user : users) {
+            Total totals = new Total();
+            totals.setName(request.getName());
+            totals.setUser(user);
+            total = totalRepository.save(totals);
+        }
 
         total = totalRepository.save(total);
 
-        return totalMapper.toTotalResponse(total);
+        return totalMapper.toTotalDisplay(total);
     }
 
     public List<Total> getAlTotal(){
@@ -60,4 +53,15 @@ public class TotalService {
                             .stream()
                             .map(totalMapper::toTotalDisplay)
                             .toList();
-    }}
+    }
+
+    public Total getTotalById(int id){
+        return totalMapper.toTotalDisplay(totalRepository.findById(id)
+                        .orElseThrow(()-> new AppException(ErrorCode.NOTFOUND)));
+    }
+
+    public void deleteTotal(int id){
+        totalRepository.deleteById(id);
+    }
+
+}

@@ -13,6 +13,6 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TotalRequest {
     String name;
-    String userId;
+    Set<String> userId;
 //    Set<String> menuId;
 }
