@@ -2,7 +2,7 @@ package com.ordereart.OrderEat.controller;
 
 import com.ordereart.OrderEat.dto.request.MenuRequest;
 import com.ordereart.OrderEat.dto.response.ApiResponse;
-import com.ordereart.OrderEat.entity.Menu;
+import com.ordereart.OrderEat.dto.response.MenuResponse;
 import com.ordereart.OrderEat.repository.MenuRepository;
 import com.ordereart.OrderEat.service.MenuService;
 import jakarta.validation.Valid;
@@ -21,32 +21,32 @@ public class MenuController {
 
     //Create Menu
     @PostMapping
-    ApiResponse<Menu> createMenu(@RequestBody @Valid MenuRequest request){
-        return ApiResponse.<Menu>builder()
+    ApiResponse<MenuResponse> createMenu(@RequestBody @Valid MenuRequest request){
+        return ApiResponse.<MenuResponse>builder()
                 .result(menuService.createMenu(request))
                 .build();
     }
 
     //Get All
     @GetMapping
-    ApiResponse<List<Menu>> findAll(){
-        return ApiResponse.<List<Menu>>builder()
+    ApiResponse<List<MenuResponse>> findAll(){
+        return ApiResponse.<List<MenuResponse>>builder()
                 .result(menuService.getAllMenu())
                 .build();
     }
 
     //Get Menu by Id
     @GetMapping("/{menuId}")
-    ApiResponse<Menu> findById(@PathVariable("menuId") int id){
-        return ApiResponse.<Menu>builder()
+    ApiResponse<MenuResponse> findById(@PathVariable("menuId") int id){
+        return ApiResponse.<MenuResponse>builder()
                 .result(menuService.getMenuById(id))
                 .build();
     }
 
     //Update Menu by Id
     @PutMapping("/{menuId}")
-    ApiResponse<Menu> updateMenu(@PathVariable("menuId") int id, @RequestBody MenuRequest request){
-        return ApiResponse.<Menu>builder()
+    ApiResponse<MenuResponse> updateMenu(@PathVariable("menuId") int id, @RequestBody MenuRequest request){
+        return ApiResponse.<MenuResponse>builder()
                 .result(menuService.updateMenu(id, request))
                 .build();
     }

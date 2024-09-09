@@ -3,7 +3,6 @@ package com.ordereart.OrderEat.mapper;
 import com.ordereart.OrderEat.dto.request.MenuRequest;
 import com.ordereart.OrderEat.dto.response.MenuResponse;
 import com.ordereart.OrderEat.entity.Menu;
-import com.ordereart.OrderEat.entity.Total;
 import com.ordereart.OrderEat.entity.User;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-07T10:13:01+0700",
+    date = "2024-09-09T09:52:32+0700",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.2 (Oracle Corporation)"
 )
 @Component
@@ -64,10 +63,6 @@ public class MenuMapperImpl implements MenuMapper {
         Set<User> set = menu.getUsers();
         if ( set != null ) {
             menu1.setUsers( new LinkedHashSet<User>( set ) );
-        }
-        Set<Total> set1 = menu.getUserMenus();
-        if ( set1 != null ) {
-            menu1.setUserMenus( new LinkedHashSet<Total>( set1 ) );
         }
 
         return menu1;

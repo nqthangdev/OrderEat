@@ -2,6 +2,7 @@ package com.ordereart.OrderEat.service;
 
 import com.ordereart.OrderEat.dto.request.UserRequest;
 import com.ordereart.OrderEat.dto.request.UserUpdateRequest;
+import com.ordereart.OrderEat.dto.response.UserResponse;
 import com.ordereart.OrderEat.entity.Menu;
 import com.ordereart.OrderEat.entity.User;
 import com.ordereart.OrderEat.exception.AppException;
@@ -27,7 +28,8 @@ public class UserService
     UserMapper userMapper;
     private final MenuRepository menuRepository;
 
-    public User createUser(UserRequest request){
+    //Create
+    public UserResponse createUser(UserRequest request){
         User user = userMapper.toUser(request);
 
         if (userRepository.existsByUsername(request.getUsername())){
@@ -35,21 +37,22 @@ public class UserService
         }
 
         user = userRepository.save(user);
-
-        return userMapper.toUserDisplay(user);
+        return userMapper.toUserResponse(user);
     }
 
-    public List<User> getAllUsers(){
-        return userRepository.findAll().stream().map(userMapper::toUserDisplay).toList();
+    //GetAll
+    public List<UserResponse> getAllUsers(){
+        return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
     }
 
-    public User getUserById(int id){
-        return userMapper.toUserDisplay(userRepository.findById(id)
+    //GetById
+    public UserResponse getUserById(int id){
+        return userMapper.toUserResponse(userRepository.findById(id)
                 .orElseThrow(()-> new AppException(ErrorCode.NOTFOUND)));
     }
 
     //Update
-    public User updateUser(int id, UserUpdateRequest request){
+    public UserResponse updateUser(int id, UserUpdateRequest request){
         User user = userRepository.findById(id)
                 .orElseThrow(()-> new AppException(ErrorCode.NOTFOUND));
 
@@ -58,8 +61,7 @@ public class UserService
         }
 
         userMapper.toUserUpdate(user, request);
-
-        return userMapper.toUserDisplay(userRepository.save(user));
+        return userMapper.toUserResponse(userRepository.save(user));
     }
 
     //Delete

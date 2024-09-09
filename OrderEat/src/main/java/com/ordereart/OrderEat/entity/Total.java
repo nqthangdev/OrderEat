@@ -20,8 +20,4 @@ public class Total {
     @ManyToOne
     @JoinColumn(name = "user_id")
     User user;
-
-//    @ManyToOne
-//    @JoinColumn(name = "menu_id")
-//    Menu menu;
 }

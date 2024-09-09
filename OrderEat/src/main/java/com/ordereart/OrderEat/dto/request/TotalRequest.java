@@ -14,5 +14,4 @@ import java.util.Set;
 public class TotalRequest {
     String name;
     Set<String> userId;
-//    Set<String> menuId;
 }

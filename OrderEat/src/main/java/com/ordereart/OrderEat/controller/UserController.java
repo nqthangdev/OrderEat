@@ -3,6 +3,7 @@ package com.ordereart.OrderEat.controller;
 import com.ordereart.OrderEat.dto.request.UserRequest;
 import com.ordereart.OrderEat.dto.request.UserUpdateRequest;
 import com.ordereart.OrderEat.dto.response.ApiResponse;
+import com.ordereart.OrderEat.dto.response.UserResponse;
 import com.ordereart.OrderEat.entity.Menu;
 import com.ordereart.OrderEat.entity.User;
 import com.ordereart.OrderEat.repository.MenuRepository;
@@ -27,32 +28,32 @@ public class UserController {
 
     //Create User
     @PostMapping
-    ApiResponse<User> createUser(@RequestBody @Valid UserRequest request){
-        return ApiResponse.<User>builder()
+    ApiResponse<UserResponse> createUser(@RequestBody @Valid UserRequest request){
+        return ApiResponse.<UserResponse>builder()
                 .result(userService.createUser(request))
                 .build();
     }
 
     //Get all User
     @GetMapping
-    ApiResponse <List<User>> findAll(){
-        return ApiResponse.<List<User>>builder()
+    ApiResponse <List<UserResponse>> findAll(){
+        return ApiResponse.<List<UserResponse>>builder()
                 .result(userService.getAllUsers())
                 .build();
     }
 
     //Get User by Id
     @GetMapping("/{userId}")
-    ApiResponse<User> findById(@PathVariable("userId") int id){
-        return ApiResponse.<User>builder()
+    ApiResponse<UserResponse> findById(@PathVariable("userId") int id){
+        return ApiResponse.<UserResponse>builder()
                 .result(userService.getUserById(id))
                 .build();
     }
 
     //Update User by Id
     @PutMapping("/{userId}")
-    ApiResponse<User> updateUser(@PathVariable("userId") int id, @RequestBody UserUpdateRequest request){
-        return ApiResponse.<User>builder()
+    ApiResponse<UserResponse> updateUser(@PathVariable("userId") int id, @RequestBody UserUpdateRequest request){
+        return ApiResponse.<UserResponse>builder()
                 .result(userService.updateUser(id, request))
                 .build();
     }

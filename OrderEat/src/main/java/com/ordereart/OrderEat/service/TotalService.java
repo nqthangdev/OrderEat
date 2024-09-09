@@ -1,6 +1,7 @@
 package com.ordereart.OrderEat.service;
 
 import com.ordereart.OrderEat.dto.request.TotalRequest;
+import com.ordereart.OrderEat.dto.response.TotalResponse;
 import com.ordereart.OrderEat.entity.Total;
 import com.ordereart.OrderEat.entity.User;
 import com.ordereart.OrderEat.exception.AppException;
@@ -26,8 +27,8 @@ public class TotalService {
     TotalRepository totalRepository;
     UserRepository userRepository;
 
-    public Total create(TotalRequest request){
-
+    //Create
+    public TotalResponse create(TotalRequest request){
         Total total = totalMapper.toTotal(request);
 
         Set<Integer> userId = request.getUserId().stream()
@@ -44,22 +45,24 @@ public class TotalService {
         }
 
         total = totalRepository.save(total);
-
-        return totalMapper.toTotalDisplay(total);
+        return totalMapper.toTotalResponse(total);
     }
 
-    public List<Total> getAlTotal(){
+    //GetAll
+    public List<TotalResponse> getAlTotal(){
         return totalRepository.findAll()
                             .stream()
-                            .map(totalMapper::toTotalDisplay)
+                            .map(totalMapper::toTotalResponse)
                             .toList();
     }
 
-    public Total getTotalById(int id){
-        return totalMapper.toTotalDisplay(totalRepository.findById(id)
+    //GetById
+    public TotalResponse getTotalById(int id){
+        return totalMapper.toTotalResponse(totalRepository.findById(id)
                         .orElseThrow(()-> new AppException(ErrorCode.NOTFOUND)));
     }
 
+    //Delete
     public void deleteTotal(int id){
         totalRepository.deleteById(id);
     }

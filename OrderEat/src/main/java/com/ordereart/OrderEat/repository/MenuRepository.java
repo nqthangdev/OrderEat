@@ -11,7 +11,5 @@ import java.util.Set;
 public interface MenuRepository extends JpaRepository<Menu, Integer> {
     boolean existsByName(String name);
 
-    List<Menu> findByName(String name);
-
     List<Menu> findAllById(Iterable<Integer> menuId);
 }

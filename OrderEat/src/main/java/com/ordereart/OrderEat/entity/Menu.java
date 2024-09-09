@@ -26,8 +26,4 @@ public class Menu {
     @JsonIgnore
     @ManyToMany(mappedBy = "menus")
     Set<User> users = new HashSet<>();
-
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "menu")
-//    Set<Total> totals = new HashSet<>();
 }
