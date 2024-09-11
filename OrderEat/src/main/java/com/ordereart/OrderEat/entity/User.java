@@ -37,6 +37,7 @@ public class User {
         menus.add(menu);
     }
 
+
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     Set<Total> totals = new HashSet<>();

@@ -35,7 +35,7 @@ public class MenuController {
                 .build();
     }
 
-    //Get Menu by Id
+    //Get by Id
     @GetMapping("/{menuId}")
     ApiResponse<MenuResponse> findById(@PathVariable("menuId") int id){
         return ApiResponse.<MenuResponse>builder()
@@ -43,7 +43,7 @@ public class MenuController {
                 .build();
     }
 
-    //Update Menu by Id
+    //Update by Id
     @PutMapping("/{menuId}")
     ApiResponse<MenuResponse> updateMenu(@PathVariable("menuId") int id, @RequestBody MenuRequest request){
         return ApiResponse.<MenuResponse>builder()
@@ -51,7 +51,7 @@ public class MenuController {
                 .build();
     }
 
-    //Delete Menu by Id
+    //Delete by Id
     @DeleteMapping("/{menuId}")
     ApiResponse<String> deleteMenu(@PathVariable("menuId") int id){
         return ApiResponse.<String>builder()

@@ -26,7 +26,7 @@ public class UserController {
     UserRepository userRepository;
     MenuRepository menuRepository;
 
-    //Create User
+    //Create
     @PostMapping
     ApiResponse<UserResponse> createUser(@RequestBody @Valid UserRequest request){
         return ApiResponse.<UserResponse>builder()
@@ -34,7 +34,7 @@ public class UserController {
                 .build();
     }
 
-    //Get all User
+    //Get all
     @GetMapping
     ApiResponse <List<UserResponse>> findAll(){
         return ApiResponse.<List<UserResponse>>builder()
@@ -42,7 +42,7 @@ public class UserController {
                 .build();
     }
 
-    //Get User by Id
+    //Get by Id
     @GetMapping("/{userId}")
     ApiResponse<UserResponse> findById(@PathVariable("userId") int id){
         return ApiResponse.<UserResponse>builder()
@@ -50,7 +50,7 @@ public class UserController {
                 .build();
     }
 
-    //Update User by Id
+    //Update by Id
     @PutMapping("/{userId}")
     ApiResponse<UserResponse> updateUser(@PathVariable("userId") int id, @RequestBody UserUpdateRequest request){
         return ApiResponse.<UserResponse>builder()
@@ -58,7 +58,7 @@ public class UserController {
                 .build();
     }
 
-    //Delete User by Id
+    //Delete by Id
     @DeleteMapping("/{userId}")
     ApiResponse<String> deleteUser(@PathVariable("userId") int id){
         return ApiResponse.<String>builder()
@@ -66,6 +66,8 @@ public class UserController {
                 .build();
     }
 
+
+    //Them menu vao user
     @PutMapping("/{userId}/menu/{menuId}")
     User updateUserMenu(@PathVariable int userId, @PathVariable int menuId){
         User user = userRepository.findById(userId).get();

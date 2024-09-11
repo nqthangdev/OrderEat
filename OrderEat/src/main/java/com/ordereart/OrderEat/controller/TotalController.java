@@ -3,7 +3,6 @@ package com.ordereart.OrderEat.controller;
 import com.ordereart.OrderEat.dto.request.TotalRequest;
 import com.ordereart.OrderEat.dto.response.ApiResponse;
 import com.ordereart.OrderEat.dto.response.TotalResponse;
-import com.ordereart.OrderEat.entity.Total;
 import com.ordereart.OrderEat.repository.TotalRepository;
 import com.ordereart.OrderEat.service.TotalService;
 import jakarta.validation.Valid;
