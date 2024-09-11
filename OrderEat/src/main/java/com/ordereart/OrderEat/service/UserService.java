@@ -13,6 +13,8 @@ import com.ordereart.OrderEat.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -31,6 +33,8 @@ public class UserService
     //Create
     public UserResponse createUser(UserRequest request){
         User user = userMapper.toUser(request);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         if (userRepository.existsByUsername(request.getUsername())){
             throw new AppException(ErrorCode.EXISTS);

@@ -11,7 +11,9 @@ import lombok.experimental.FieldDefaults;
 public enum ErrorCode {
     EXISTS(1001,"Has been existed !"),
     USER_LARGER(1002,"Username must be larger 8 characters !"),
-    NOTFOUND(1003,"Not found !")
+    NOTFOUND(1003,"Not found !"),
+    NOTEXIST(1004,"User not Exist !"),
+    UNAUTHENTICATED(1005, "Unauthenticated !")
     ;
     final int code ;
     final String message;
