@@ -1,6 +1,7 @@
 package com.ordereart.OrderEat.dto.response;
 
 import com.ordereart.OrderEat.entity.Menu;
+import com.ordereart.OrderEat.enums.Role;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -21,5 +22,6 @@ public class UserResponse {
     String name;
     String phone;
     String location;
+    Set<String> roles;
     Set<Menu> menus;
 }
