@@ -63,8 +63,8 @@ public class TotalService {
     }
 
     //Delete
-    public void deleteTotal(int id){
+    public TotalResponse deleteTotal(int id){
         totalRepository.deleteById(id);
+        return null;
     }
-
 }

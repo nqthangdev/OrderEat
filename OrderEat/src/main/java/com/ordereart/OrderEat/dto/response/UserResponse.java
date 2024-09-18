@@ -1,12 +1,10 @@
 package com.ordereart.OrderEat.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ordereart.OrderEat.entity.Menu;
-import com.ordereart.OrderEat.enums.Role;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -18,7 +16,10 @@ public class UserResponse {
 
     int id;
     String username;
+
+    @JsonIgnore
     String password;
+    
     String name;
     String phone;
     String location;

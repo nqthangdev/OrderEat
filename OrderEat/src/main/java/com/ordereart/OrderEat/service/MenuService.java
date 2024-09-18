@@ -6,6 +6,7 @@ import com.ordereart.OrderEat.entity.Menu;
 import com.ordereart.OrderEat.exception.AppException;
 import com.ordereart.OrderEat.exception.ErrorCode;
 import com.ordereart.OrderEat.mapper.MenuMapper;
+import com.ordereart.OrderEat.mapper.UserMapper;
 import com.ordereart.OrderEat.repository.MenuRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class MenuService {
 
     //Create
     public MenuResponse createMenu(MenuRequest request){
+
         Menu menu = menuMapper.toMenu(request);
 
         if (menuRepository.existsByName(request.getName())){
@@ -58,7 +60,8 @@ public class MenuService {
     }
 
     //Delete
-    public void deleteMenu(int id){
+    public MenuResponse deleteMenu(int id){
         menuRepository.deleteById(id);
+        return null;
     }
 }

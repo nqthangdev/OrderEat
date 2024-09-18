@@ -1,16 +1,19 @@
 package com.ordereart.OrderEat.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ordereart.OrderEat.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Consumer;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -24,6 +27,7 @@ public class User {
     String name;
     String phone;
     String location;
+    Set<String> roles;
 
     @ManyToMany
     @JoinTable(

@@ -1,2 +1,6 @@
-package com.ordereart.OrderEat.enums;public enum Enum {
+package com.ordereart.OrderEat.enums;
+
+public enum Role {
+    ADMIN,
+    USER
 }

@@ -13,10 +13,17 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -27,6 +34,7 @@ public class UserController {
     MenuRepository menuRepository;
 
     //Create
+    //User, Admin
     @PostMapping
     ApiResponse<UserResponse> createUser(@RequestBody @Valid UserRequest request){
         return ApiResponse.<UserResponse>builder()
@@ -35,14 +43,23 @@ public class UserController {
     }
 
     //Get all
+    //Admin
     @GetMapping
     ApiResponse <List<UserResponse>> findAll(){
+
+        //Kiem tra token la cua User hay Admin
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info("Username: {}", authentication.getName());
+        authentication.getAuthorities().forEach(grantedAuthority -> log.info(grantedAuthority.getAuthority()));
+
         return ApiResponse.<List<UserResponse>>builder()
                 .result(userService.getAllUsers())
                 .build();
     }
 
     //Get by Id
+    //User, Admin
+    @PreAuthorize("#userUsername == authentication.username")
     @GetMapping("/{userId}")
     ApiResponse<UserResponse> findById(@PathVariable("userId") int id){
         return ApiResponse.<UserResponse>builder()
@@ -50,7 +67,16 @@ public class UserController {
                 .build();
     }
 
+    //GetMyInfo
+    @GetMapping("/myInfo")
+    ApiResponse<UserResponse> findById(){
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.getMyInfo())
+                .build();
+    }
+
     //Update by Id
+    //User, Admin
     @PutMapping("/{userId}")
     ApiResponse<UserResponse> updateUser(@PathVariable("userId") int id, @RequestBody UserUpdateRequest request){
         return ApiResponse.<UserResponse>builder()
@@ -59,15 +85,17 @@ public class UserController {
     }
 
     //Delete by Id
+    //Admin
     @DeleteMapping("/{userId}")
-    ApiResponse<String> deleteUser(@PathVariable("userId") int id){
-        return ApiResponse.<String>builder()
-                .result("Has been deleted !")
+    ApiResponse<UserResponse> deleteUser(@PathVariable("userId") int id){
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.deleteUser(id))
                 .build();
     }
 
 
     //Them menu vao user
+    //User, Admin
     @PutMapping("/{userId}/menu/{menuId}")
     User updateUserMenu(@PathVariable int userId, @PathVariable int menuId){
         User user = userRepository.findById(userId).get();
