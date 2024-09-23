@@ -44,8 +44,8 @@ public class TotalController {
 
     //Delete
     @DeleteMapping("/{totalId}")
-    ApiResponse<TotalResponse> delete(@PathVariable("totalId") int id){
-        return ApiResponse.<TotalResponse>builder()
+    ApiResponse<String> delete(@PathVariable("totalId") int id){
+        return ApiResponse.<String>builder()
                 .result(totalService.deleteTotal(id))
                 .build();
     }

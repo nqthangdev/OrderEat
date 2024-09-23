@@ -12,6 +12,7 @@ import com.ordereart.OrderEat.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,6 +50,7 @@ public class TotalService {
     }
 
     //GetAll
+    @PreAuthorize("hasRole('ADMIN')")
     public List<TotalResponse> getAlTotal(){
         return totalRepository.findAll()
                             .stream()
@@ -63,9 +65,9 @@ public class TotalService {
     }
 
     //Delete
-    public TotalResponse deleteTotal(int id){
+    public String deleteTotal(int id){
         totalRepository.deleteById(id);
-        return null;
+        return "Total has been deleted !";
     }
 
 }

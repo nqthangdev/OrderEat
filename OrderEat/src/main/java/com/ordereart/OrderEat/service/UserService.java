@@ -13,6 +13,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -44,16 +46,18 @@ public class UserService
         roles.add(Role.USER.name());
 
         user.setRoles(roles);
-
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
     //GetAll
+    @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponse> getAllUsers(){
+        log.info("Service: get User");
         return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
     }
 
     //GetById
+    @PostAuthorize("returnObject.username == authentication.name")
     public UserResponse getUserById(int id){
         return userMapper.toUserResponse(userRepository.findById(id)
                 .orElseThrow(()-> new AppException(ErrorCode.NOTFOUND)));
@@ -80,8 +84,8 @@ public class UserService
     }
 
     //Delete
-    public UserResponse deleteUser(int id){
+    public String deleteUser(int id){
         userRepository.deleteById(id);
-        return null;
+        return "User has been deleted !";
     }
 }

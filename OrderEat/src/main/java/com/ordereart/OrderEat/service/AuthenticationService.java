@@ -39,6 +39,7 @@ public class AuthenticationService {
     @Value("${jwt.signerKey}")
     protected String SIGNER_KEY;
 
+    //Tao token
     public AuthenticationResponse authenticate(AuthenticationRequest request){
         var user = userRepository.findByUsername(request.getUsername())
                             .orElseThrow(()-> new AppException(ErrorCode.NOTEXIST));
@@ -48,20 +49,6 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .token(token)
                 .authenticated(true)
-                .build();
-    }
-
-    public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
-        var token = request.getToken();
-
-        JWSVerifier jwsVerifier = new MACVerifier(SIGNER_KEY.getBytes());
-
-        SignedJWT signedJWT = SignedJWT.parse(token);
-
-        var verify = signedJWT.verify(jwsVerifier);
-
-        return IntrospectResponse.builder()
-                .valid(verify)
                 .build();
     }
 
@@ -94,5 +81,20 @@ public class AuthenticationService {
             user.getRoles().forEach(stringJoiner::add);
         }
         return stringJoiner.toString();
+    }
+
+    //Kiem tra token
+    public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
+        var token = request.getToken();
+
+        JWSVerifier jwsVerifier = new MACVerifier(SIGNER_KEY.getBytes());
+
+        SignedJWT signedJWT = SignedJWT.parse(token);
+
+        var verify = signedJWT.verify(jwsVerifier);
+
+        return IntrospectResponse.builder()
+                .valid(verify)
+                .build();
     }
 }

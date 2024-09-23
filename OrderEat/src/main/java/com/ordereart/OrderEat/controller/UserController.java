@@ -43,7 +43,7 @@ public class UserController {
     //Admin
     @GetMapping
     ApiResponse <List<UserResponse>> findAll(){
-
+        log.info("Controller: get User");
         //Kiem tra token la cua User hay Admin
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         log.info("Username: {}", authentication.getName());
@@ -56,7 +56,6 @@ public class UserController {
 
     //Get by Id
     //User, Admin
-    @PreAuthorize("#userUsername == authentication.username")
     @GetMapping("/{userId}")
     ApiResponse<UserResponse> findById(@PathVariable("userId") int id){
         return ApiResponse.<UserResponse>builder()
@@ -84,8 +83,8 @@ public class UserController {
     //Delete by Id
     //Admin
     @DeleteMapping("/{userId}")
-    ApiResponse<UserResponse> deleteUser(@PathVariable("userId") int id){
-        return ApiResponse.<UserResponse>builder()
+    ApiResponse<String> deleteUser(@PathVariable("userId") int id){
+        return ApiResponse.<String>builder()
                 .result(userService.deleteUser(id))
                 .build();
     }

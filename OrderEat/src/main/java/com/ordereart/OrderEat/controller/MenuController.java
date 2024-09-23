@@ -53,7 +53,7 @@ public class MenuController {
     @DeleteMapping("/{menuId}")
     ApiResponse<String> deleteMenu(@PathVariable("menuId") int id){
         return ApiResponse.<String>builder()
-                .result("Has been deleted !")
+                .result(menuService.deleteMenu(id))
                 .build();
     }
 }

@@ -59,8 +59,8 @@ public class MenuService {
     }
 
     //Delete
-    public MenuResponse deleteMenu(int id){
+    public String deleteMenu(int id){
         menuRepository.deleteById(id);
-        return null;
+        return "Menu has been deleted !";
     }
 }

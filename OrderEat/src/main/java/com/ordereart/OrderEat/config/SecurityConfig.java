@@ -1,18 +1,14 @@
 package com.ordereart.OrderEat.config;
 
 import com.ordereart.OrderEat.enums.Role;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
@@ -26,6 +22,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Value("${jwt.signerKey}")
@@ -34,13 +31,13 @@ public class SecurityConfig {
     private final String[] PUBLIC_ENDPOINTS = {
             "/menu", "/menu/{menuId}",
             "/totals/{totalId}",
+            "/users/myInfo"
     };
     private final String[] TOKEN = {
             "/authenticate/token",
             "/authenticate/introspect",
             "/users/{usersId}/menu/{menuId}"
     };
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity security) throws Exception{
@@ -51,20 +48,17 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
 
                 //GET
-                .requestMatchers(HttpMethod.GET, "/users/myInfo").permitAll()
-                .requestMatchers(HttpMethod.GET, "/users", "/totals", "/users/{userId}").hasRole(Role.ADMIN.name())
                 .requestMatchers(HttpMethod.GET, PUBLIC_ENDPOINTS).permitAll()
 
                 //PUT - DELETE
-                .requestMatchers(HttpMethod.PUT, "/users/myInfo").permitAll()
                 .requestMatchers(HttpMethod.PUT, PUBLIC_ENDPOINTS).permitAll()
                 .requestMatchers(HttpMethod.DELETE, PUBLIC_ENDPOINTS).permitAll()
 
                 //Token
                 .requestMatchers(HttpMethod.POST, TOKEN).permitAll()
+
                 .anyRequest()
                 .authenticated());
-
 
         security.oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwtConfigurer -> jwtConfigurer
