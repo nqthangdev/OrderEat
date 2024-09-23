@@ -3,15 +3,12 @@ package com.ordereart.OrderEat.mapper;
 import com.ordereart.OrderEat.dto.request.MenuRequest;
 import com.ordereart.OrderEat.dto.response.MenuResponse;
 import com.ordereart.OrderEat.entity.Menu;
-import com.ordereart.OrderEat.entity.User;
-import java.util.LinkedHashSet;
-import java.util.Set;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-11T22:18:27+0700",
+    date = "2024-09-18T16:49:56+0700",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.2 (Oracle Corporation)"
 )
 @Component
@@ -23,13 +20,13 @@ public class MenuMapperImpl implements MenuMapper {
             return null;
         }
 
-        Menu menu = new Menu();
+        Menu.MenuBuilder menu = Menu.builder();
 
-        menu.setName( request.getName() );
-        menu.setDescription( request.getDescription() );
-        menu.setPrice( request.getPrice() );
+        menu.name( request.getName() );
+        menu.description( request.getDescription() );
+        menu.price( request.getPrice() );
 
-        return menu;
+        return menu.build();
     }
 
     @Override
@@ -46,26 +43,6 @@ public class MenuMapperImpl implements MenuMapper {
         menuResponse.price( menu.getPrice() );
 
         return menuResponse.build();
-    }
-
-    @Override
-    public Menu toMenuDisplay(Menu menu) {
-        if ( menu == null ) {
-            return null;
-        }
-
-        Menu menu1 = new Menu();
-
-        menu1.setId( menu.getId() );
-        menu1.setName( menu.getName() );
-        menu1.setDescription( menu.getDescription() );
-        menu1.setPrice( menu.getPrice() );
-        Set<User> set = menu.getUsers();
-        if ( set != null ) {
-            menu1.setUsers( new LinkedHashSet<User>( set ) );
-        }
-
-        return menu1;
     }
 
     @Override

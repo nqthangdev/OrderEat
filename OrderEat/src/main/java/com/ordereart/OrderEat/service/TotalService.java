@@ -67,4 +67,5 @@ public class TotalService {
         totalRepository.deleteById(id);
         return null;
     }
+
 }

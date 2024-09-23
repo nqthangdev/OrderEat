@@ -12,7 +12,5 @@ public interface MenuMapper {
 
     MenuResponse toMenuResponse(Menu menu);
 
-    Menu toMenuDisplay(Menu menu);
-
     void toMenuUpdate(@MappingTarget Menu menu, MenuRequest request);
 }

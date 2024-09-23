@@ -37,7 +37,8 @@ public class SecurityConfig {
     };
     private final String[] TOKEN = {
             "/authenticate/token",
-            "/authenticate/introspect"
+            "/authenticate/introspect",
+            "/users/{usersId}/menu/{menuId}"
     };
 
 
@@ -45,8 +46,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity security) throws Exception{
         security.authorizeHttpRequests(request -> request
                 //User - Menu - Total
+
                 //POST
                 .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
+
                 //GET
                 .requestMatchers(HttpMethod.GET, "/users/myInfo").permitAll()
                 .requestMatchers(HttpMethod.GET, "/users", "/totals", "/users/{userId}").hasRole(Role.ADMIN.name())

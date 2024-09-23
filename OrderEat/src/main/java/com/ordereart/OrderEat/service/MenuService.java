@@ -6,7 +6,6 @@ import com.ordereart.OrderEat.entity.Menu;
 import com.ordereart.OrderEat.exception.AppException;
 import com.ordereart.OrderEat.exception.ErrorCode;
 import com.ordereart.OrderEat.mapper.MenuMapper;
-import com.ordereart.OrderEat.mapper.UserMapper;
 import com.ordereart.OrderEat.repository.MenuRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

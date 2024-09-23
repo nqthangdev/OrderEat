@@ -1,9 +1,7 @@
 package com.ordereart.OrderEat.config;
 
-import com.ordereart.OrderEat.entity.Menu;
 import com.ordereart.OrderEat.entity.User;
 import com.ordereart.OrderEat.enums.Role;
-import com.ordereart.OrderEat.repository.MenuRepository;
 import com.ordereart.OrderEat.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
@@ -20,7 +18,7 @@ public class ApplicationInitConfig {
     PasswordEncoder passwordEncoder;
 
     @Bean
-    ApplicationRunner applicationRunner(UserRepository userRepository, MenuRepository menuRepository){
+    ApplicationRunner applicationRunner(UserRepository userRepository){
         return args -> {
             if(userRepository.findByUsername("admin").isEmpty()){
                 var roles = new HashSet<String>();

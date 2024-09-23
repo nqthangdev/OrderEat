@@ -4,7 +4,6 @@ import com.ordereart.OrderEat.dto.request.UserRequest;
 import com.ordereart.OrderEat.dto.request.UserUpdateRequest;
 import com.ordereart.OrderEat.dto.response.UserResponse;
 import com.ordereart.OrderEat.entity.Menu;
-import com.ordereart.OrderEat.entity.Total;
 import com.ordereart.OrderEat.entity.User;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-11T22:17:35+0700",
+    date = "2024-09-18T16:49:56+0700",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.2 (Oracle Corporation)"
 )
 @Component
@@ -25,45 +24,15 @@ public class UserMapperImpl implements UserMapper {
             return null;
         }
 
-        User user = new User();
+        User.UserBuilder user = User.builder();
 
-        user.setUsername( request.getUsername() );
-        user.setPassword( request.getPassword() );
-        user.setName( request.getName() );
-        user.setPhone( request.getPhone() );
-        user.setLocation( request.getLocation() );
+        user.username( request.getUsername() );
+        user.password( request.getPassword() );
+        user.name( request.getName() );
+        user.phone( request.getPhone() );
+        user.location( request.getLocation() );
 
-        return user;
-    }
-
-    @Override
-    public User toUserDisplay(User user) {
-        if ( user == null ) {
-            return null;
-        }
-
-        User user1 = new User();
-
-        user1.setId( user.getId() );
-        user1.setUsername( user.getUsername() );
-        user1.setPassword( user.getPassword() );
-        user1.setName( user.getName() );
-        user1.setPhone( user.getPhone() );
-        user1.setLocation( user.getLocation() );
-        Set<String> set = user.getRoles();
-        if ( set != null ) {
-            user1.setRoles( new LinkedHashSet<String>( set ) );
-        }
-        Set<Menu> set1 = user.getMenus();
-        if ( set1 != null ) {
-            user1.setMenus( new LinkedHashSet<Menu>( set1 ) );
-        }
-        Set<Total> set2 = user.getTotals();
-        if ( set2 != null ) {
-            user1.setTotals( new LinkedHashSet<Total>( set2 ) );
-        }
-
-        return user1;
+        return user.build();
     }
 
     @Override

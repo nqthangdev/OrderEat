@@ -10,7 +10,4 @@ public interface TotalMapper {
     Total toTotal(TotalRequest request);
 
     TotalResponse toTotalResponse(Total total);
-
-    Total toTotalDisplay(Total total);
-
 }

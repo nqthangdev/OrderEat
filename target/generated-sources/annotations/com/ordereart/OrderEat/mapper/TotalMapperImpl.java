@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-11T22:17:35+0700",
+    date = "2024-09-18T16:49:56+0700",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.2 (Oracle Corporation)"
 )
 @Component
@@ -40,20 +40,5 @@ public class TotalMapperImpl implements TotalMapper {
         totalResponse.user( total.getUser() );
 
         return totalResponse.build();
-    }
-
-    @Override
-    public Total toTotalDisplay(Total total) {
-        if ( total == null ) {
-            return null;
-        }
-
-        Total total1 = new Total();
-
-        total1.setId( total.getId() );
-        total1.setName( total.getName() );
-        total1.setUser( total.getUser() );
-
-        return total1;
     }
 }

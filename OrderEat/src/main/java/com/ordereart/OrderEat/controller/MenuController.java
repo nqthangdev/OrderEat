@@ -3,7 +3,6 @@ package com.ordereart.OrderEat.controller;
 import com.ordereart.OrderEat.dto.request.MenuRequest;
 import com.ordereart.OrderEat.dto.response.ApiResponse;
 import com.ordereart.OrderEat.dto.response.MenuResponse;
-import com.ordereart.OrderEat.repository.MenuRepository;
 import com.ordereart.OrderEat.service.MenuService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ import java.util.List;
 public class MenuController {
 
     final MenuService menuService;
-    private final MenuRepository menuRepository;
 
     //Create Menu
     @PostMapping

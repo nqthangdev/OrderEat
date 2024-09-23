@@ -64,7 +64,8 @@ public class UserService
         var context = SecurityContextHolder.getContext();
         String name = context.getAuthentication().getName();
 
-        User user = userRepository.findByUsername(name).orElseThrow(() -> new AppException(ErrorCode.NOTFOUND));
+        User user = userRepository.findByUsername(name)
+                .orElseThrow(() -> new AppException(ErrorCode.NOTFOUND));
 
         return userMapper.toUserResponse(user);
     }

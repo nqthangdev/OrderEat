@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TotalRepository extends JpaRepository<Total, Integer> {
-    boolean existsByName(String name);
 }
