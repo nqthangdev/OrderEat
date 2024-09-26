@@ -3,7 +3,7 @@ package com.ordereart.OrderEat.mapper;
 import com.ordereart.OrderEat.dto.request.UserRequest;
 import com.ordereart.OrderEat.dto.request.UserUpdateRequest;
 import com.ordereart.OrderEat.dto.response.UserResponse;
-import com.ordereart.OrderEat.entity.Menu;
+import com.ordereart.OrderEat.entity.Restaurant;
 import com.ordereart.OrderEat.entity.User;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-18T16:49:56+0700",
+    date = "2024-09-26T15:55:01+0700",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.2 (Oracle Corporation)"
 )
 @Component
@@ -53,9 +53,9 @@ public class UserMapperImpl implements UserMapper {
         if ( set != null ) {
             userResponse.roles( new LinkedHashSet<String>( set ) );
         }
-        Set<Menu> set1 = user.getMenus();
+        Set<Restaurant> set1 = user.getRestaurants();
         if ( set1 != null ) {
-            userResponse.menus( new LinkedHashSet<Menu>( set1 ) );
+            userResponse.restaurants( new LinkedHashSet<Restaurant>( set1 ) );
         }
 
         return userResponse.build();

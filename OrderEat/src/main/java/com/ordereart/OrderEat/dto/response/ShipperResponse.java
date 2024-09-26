@@ -1,5 +1,6 @@
 package com.ordereart.OrderEat.dto.response;
 
+import com.ordereart.OrderEat.entity.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -8,10 +9,10 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class MenuResponse {
+public class ShipperResponse {
     int id;
-
     String name;
-    String description;
-    int price;
+    String phone;
+    String email;
+    User user;
 }

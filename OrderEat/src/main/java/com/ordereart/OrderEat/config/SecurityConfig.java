@@ -29,14 +29,14 @@ public class SecurityConfig {
     String Key;
 
     private final String[] PUBLIC_ENDPOINTS = {
-            "/menu", "/menu/{menuId}",
-            "/totals/{totalId}",
+            "/menu", "/restaurants/{restaurantId}",
+            "/shippers/{shipperId}",
             "/users/myInfo"
     };
     private final String[] TOKEN = {
             "/authenticate/token",
             "/authenticate/introspect",
-            "/users/{usersId}/menu/{menuId}"
+            "/users/{usersId}/restaurants/{restaurantId}"
     };
 
     @Bean

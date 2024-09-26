@@ -11,7 +11,9 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TotalRequest {
+public class ShipperRequest {
     String name;
+    String phone;
+    String email;
     Set<String> userId;
 }

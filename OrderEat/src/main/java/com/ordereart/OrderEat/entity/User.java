@@ -29,18 +29,18 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-            name = "user_menu",
+            name = "total",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "menu_id")
+            inverseJoinColumns = @JoinColumn(name = "restaurant_id")
     )
-    Set<Menu> menus = new HashSet<>();
+    Set<Restaurant> restaurants = new HashSet<>();
 
-    public void UserMenu(Menu menu){
-        menus.add(menu);
+    public void UserRestaurant(Restaurant restaurant){
+        restaurants.add(restaurant);
     }
 
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
-    Set<Total> totals = new HashSet<>();
+    Set<Shipper> shippers = new HashSet<>();
 }

@@ -1,13 +1,13 @@
 package com.ordereart.OrderEat.service;
 
-import com.ordereart.OrderEat.dto.request.TotalRequest;
-import com.ordereart.OrderEat.dto.response.TotalResponse;
-import com.ordereart.OrderEat.entity.Total;
+import com.ordereart.OrderEat.dto.request.ShipperRequest;
+import com.ordereart.OrderEat.dto.response.ShipperResponse;
+import com.ordereart.OrderEat.entity.Shipper;
 import com.ordereart.OrderEat.entity.User;
 import com.ordereart.OrderEat.exception.AppException;
 import com.ordereart.OrderEat.exception.ErrorCode;
-import com.ordereart.OrderEat.mapper.TotalMapper;
-import com.ordereart.OrderEat.repository.TotalRepository;
+import com.ordereart.OrderEat.mapper.ShipperMapper;
+import com.ordereart.OrderEat.repository.ShipperRepository;
 import com.ordereart.OrderEat.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -22,15 +22,15 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class TotalService {
+public class ShipperService {
 
-    TotalMapper totalMapper;
-    TotalRepository totalRepository;
+    ShipperMapper shipperMapper;
+    ShipperRepository shipperRepository;
     UserRepository userRepository;
 
     //Create
-    public TotalResponse create(TotalRequest request){
-        Total total = totalMapper.toTotal(request);
+    public ShipperResponse create(ShipperRequest request){
+        Shipper shipper = shipperMapper.toShipper(request);
 
         Set<Integer> userId = request.getUserId().stream()
                                      .map(Integer::valueOf)
@@ -39,35 +39,36 @@ public class TotalService {
         List<User> users = userRepository.findAllById(userId);
 
         for (User user : users) {
-            Total totals = new Total();
-            totals.setName(request.getName());
-            totals.setUser(user);
-            total = totalRepository.save(totals);
+            Shipper shippers = new Shipper();
+            shippers.setName(request.getName());
+            shippers.setPhone(request.getPhone());
+            shippers.setEmail(request.getEmail());
+            shippers.setUser(user);
+            shipper = shipperRepository.save(shippers);
         }
 
-        total = totalRepository.save(total);
-        return totalMapper.toTotalResponse(total);
+        shipper = shipperRepository.save(shipper);
+        return shipperMapper.toShipperResponse(shipper);
     }
 
     //GetAll
     @PreAuthorize("hasRole('ADMIN')")
-    public List<TotalResponse> getAlTotal(){
-        return totalRepository.findAll()
+    public List<ShipperResponse> getAll(){
+        return shipperRepository.findAll()
                             .stream()
-                            .map(totalMapper::toTotalResponse)
+                            .map(shipperMapper::toShipperResponse)
                             .toList();
     }
 
     //GetById
-    public TotalResponse getTotalById(int id){
-        return totalMapper.toTotalResponse(totalRepository.findById(id)
+    public ShipperResponse getById(int id){
+        return shipperMapper.toShipperResponse(shipperRepository.findById(id)
                         .orElseThrow(()-> new AppException(ErrorCode.NOTFOUND)));
     }
 
     //Delete
-    public String deleteTotal(int id){
-        totalRepository.deleteById(id);
+    public String delete(int id){
+        shipperRepository.deleteById(id);
         return "Total has been deleted !";
     }
-
 }

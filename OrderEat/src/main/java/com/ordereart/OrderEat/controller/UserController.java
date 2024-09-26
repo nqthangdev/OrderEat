@@ -4,9 +4,9 @@ import com.ordereart.OrderEat.dto.request.UserRequest;
 import com.ordereart.OrderEat.dto.request.UserUpdateRequest;
 import com.ordereart.OrderEat.dto.response.ApiResponse;
 import com.ordereart.OrderEat.dto.response.UserResponse;
-import com.ordereart.OrderEat.entity.Menu;
+import com.ordereart.OrderEat.entity.Restaurant;
 import com.ordereart.OrderEat.entity.User;
-import com.ordereart.OrderEat.repository.MenuRepository;
+import com.ordereart.OrderEat.repository.RestaurantRepository;
 import com.ordereart.OrderEat.repository.UserRepository;
 import com.ordereart.OrderEat.service.UserService;
 import jakarta.validation.Valid;
@@ -14,7 +14,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,12 +27,12 @@ import java.util.List;
 public class UserController {
     UserService userService;
     UserRepository userRepository;
-    MenuRepository menuRepository;
+    RestaurantRepository restaurantRepository;
 
     //Create
     //User, Admin
     @PostMapping
-    ApiResponse<UserResponse> createUser(@RequestBody @Valid UserRequest request){
+    ApiResponse<UserResponse> create(@RequestBody @Valid UserRequest request){
         return ApiResponse.<UserResponse>builder()
                 .result(userService.createUser(request))
                 .build();
@@ -74,7 +73,7 @@ public class UserController {
     //Update by Id
     //User, Admin
     @PutMapping("/{userId}")
-    ApiResponse<UserResponse> updateUser(@PathVariable("userId") int id, @RequestBody UserUpdateRequest request){
+    ApiResponse<UserResponse> update(@PathVariable("userId") int id, @RequestBody UserUpdateRequest request){
         return ApiResponse.<UserResponse>builder()
                 .result(userService.updateUser(id, request))
                 .build();
@@ -83,7 +82,7 @@ public class UserController {
     //Delete by Id
     //Admin
     @DeleteMapping("/{userId}")
-    ApiResponse<String> deleteUser(@PathVariable("userId") int id){
+    ApiResponse<String> delete(@PathVariable("userId") int id){
         return ApiResponse.<String>builder()
                 .result(userService.deleteUser(id))
                 .build();
@@ -92,11 +91,11 @@ public class UserController {
 
     //Them menu vao user
     //User, Admin
-    @PutMapping("/{userId}/menu/{menuId}")
-    User updateUserMenu(@PathVariable int userId, @PathVariable int menuId){
+    @PutMapping("/{userId}/restaurants/{restaurantId}")
+    User updateUserRestaurant(@PathVariable int userId, @PathVariable int restaurantId){
         User user = userRepository.findById(userId).get();
-        Menu menu = menuRepository.findById(menuId).get();
-        user.UserMenu(menu);
+        Restaurant restaurant = restaurantRepository.findById(restaurantId).get();
+        user.UserRestaurant(restaurant);
         return userRepository.save(user);
     }
 }

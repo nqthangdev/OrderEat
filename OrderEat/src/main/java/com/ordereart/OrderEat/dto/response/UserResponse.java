@@ -1,7 +1,7 @@
 package com.ordereart.OrderEat.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ordereart.OrderEat.entity.Menu;
+import com.ordereart.OrderEat.entity.Restaurant;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -24,5 +24,5 @@ public class UserResponse {
     String phone;
     String location;
     Set<String> roles;
-    Set<Menu> menus;
+    Set<Restaurant> restaurants;
 }
