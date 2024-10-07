@@ -1,5 +1,6 @@
 package com.ordereart.OrderEat.controller;
 
+import com.ordereart.OrderEat.dto.dto.UserDTO;
 import com.ordereart.OrderEat.dto.request.UserRequest;
 import com.ordereart.OrderEat.dto.request.UserUpdateRequest;
 import com.ordereart.OrderEat.dto.response.ApiResponse;
@@ -40,32 +41,48 @@ public class UserController {
 
     //Get all
     //Admin
-    @GetMapping
-    ApiResponse <List<UserResponse>> findAll(){
-        log.info("Controller: get User");
-        //Kiem tra token la cua User hay Admin
-        var authentication = SecurityContextHolder.getContext().getAuthentication();
-        log.info("Username: {}", authentication.getName());
-        authentication.getAuthorities().forEach(grantedAuthority -> log.info(grantedAuthority.getAuthority()));
+    ApiResponse<List<UserDTO>> getAll(){
+        List<UserDTO> userDTO = userService.getAll();
+        return ApiResponse.<List<UserDTO>>builder()
+                .result(userDTO).build();
+    }
 
-        return ApiResponse.<List<UserResponse>>builder()
-                .result(userService.getAllUsers())
-                .build();
+    //Search by URL
+    @GetMapping("/search")
+    List<UserDTO> searchUsers(
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String phone,
+            @RequestParam(required = false) String location) {
+        return userService.searchUser(username, name, location, phone);
+    }
+
+    //Get by input body
+    @GetMapping("/all/search")
+    public List<User> searchUsers(@RequestBody UserDTO userDTO) {
+        return userService.searchUsers(userDTO.getUsername());
     }
 
     //Get by Id
     //User, Admin
     @GetMapping("/{userId}")
-    ApiResponse<UserResponse> findById(@PathVariable("userId") int id){
-        return ApiResponse.<UserResponse>builder()
-                .result(userService.getUserById(id))
+    ApiResponse<UserDTO> findById(@PathVariable("userId") int id){
+
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        authentication.getAuthorities().forEach(grantedAuthority -> log.info(grantedAuthority.getAuthority()));
+        log.info("Username: {}", authentication.getName());
+
+        UserDTO userDTOS = userService.getUserById(id);
+
+        return ApiResponse.<UserDTO>builder()
+                .result(userDTOS)
                 .build();
     }
 
     //GetMyInfo
     @GetMapping("/myInfo")
-    ApiResponse<UserResponse> findById(){
-        return ApiResponse.<UserResponse>builder()
+    ApiResponse<UserDTO> info(){
+        return ApiResponse.<UserDTO>builder()
                 .result(userService.getMyInfo())
                 .build();
     }
@@ -88,14 +105,16 @@ public class UserController {
                 .build();
     }
 
-
     //Them menu vao user
     //User, Admin
     @PutMapping("/{userId}/restaurants/{restaurantId}")
     User updateUserRestaurant(@PathVariable int userId, @PathVariable int restaurantId){
+
         User user = userRepository.findById(userId).get();
+
         Restaurant restaurant = restaurantRepository.findById(restaurantId).get();
         user.UserRestaurant(restaurant);
+
         return userRepository.save(user);
     }
 }

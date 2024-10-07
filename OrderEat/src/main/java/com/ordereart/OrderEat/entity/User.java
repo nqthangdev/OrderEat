@@ -34,11 +34,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "restaurant_id")
     )
     Set<Restaurant> restaurants = new HashSet<>();
-
     public void UserRestaurant(Restaurant restaurant){
         restaurants.add(restaurant);
     }
-
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")

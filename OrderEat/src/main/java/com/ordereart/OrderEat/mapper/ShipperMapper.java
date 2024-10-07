@@ -10,5 +10,4 @@ public interface ShipperMapper {
     Shipper toShipper(ShipperRequest request);
 
     ShipperResponse toShipperResponse(Shipper shipper);
-
 }

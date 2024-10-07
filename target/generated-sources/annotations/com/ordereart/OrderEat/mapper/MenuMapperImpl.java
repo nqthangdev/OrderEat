@@ -1,5 +1,6 @@
 package com.ordereart.OrderEat.mapper;
 
+import com.ordereart.OrderEat.dto.dto.RestaurantDTO;
 import com.ordereart.OrderEat.dto.request.RestaurantRequest;
 import com.ordereart.OrderEat.dto.response.RestaurantResponse;
 import com.ordereart.OrderEat.entity.Restaurant;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-26T15:55:00+0700",
+    date = "2024-10-03T16:11:04+0700",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.2 (Oracle Corporation)"
 )
 @Component
@@ -54,5 +55,21 @@ public class MenuMapperImpl implements MenuMapper {
         restaurant.setName( request.getName() );
         restaurant.setDescription( request.getDescription() );
         restaurant.setPrice( request.getPrice() );
+    }
+
+    @Override
+    public RestaurantDTO toRestaurantDTO(Restaurant restaurant) {
+        if ( restaurant == null ) {
+            return null;
+        }
+
+        RestaurantDTO.RestaurantDTOBuilder restaurantDTO = RestaurantDTO.builder();
+
+        restaurantDTO.id( restaurant.getId() );
+        restaurantDTO.name( restaurant.getName() );
+        restaurantDTO.description( restaurant.getDescription() );
+        restaurantDTO.price( restaurant.getPrice() );
+
+        return restaurantDTO.build();
     }
 }

@@ -1,6 +1,5 @@
 package com.ordereart.OrderEat.config;
 
-import com.ordereart.OrderEat.enums.Role;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

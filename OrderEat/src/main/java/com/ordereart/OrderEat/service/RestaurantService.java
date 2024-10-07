@@ -1,5 +1,6 @@
 package com.ordereart.OrderEat.service;
 
+import com.ordereart.OrderEat.dto.dto.RestaurantDTO;
 import com.ordereart.OrderEat.dto.request.RestaurantRequest;
 import com.ordereart.OrderEat.dto.response.RestaurantResponse;
 import com.ordereart.OrderEat.entity.Restaurant;
@@ -13,6 +14,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,29 +24,41 @@ public class RestaurantService {
     RestaurantRepository restaurantRepository;
     MenuMapper menuMapper;
 
+    public RestaurantDTO restaurantDTO(Restaurant restaurant){
+        RestaurantDTO restaurantDTO = new RestaurantDTO();
+        restaurantDTO.setId(restaurant.getId());
+        restaurantDTO.setName(restaurant.getName());
+        return restaurantDTO;
+    }
+
+
     //Create
     public RestaurantResponse createRestaurant(RestaurantRequest request){
 
         Restaurant restaurant = menuMapper.toRestaurant(request);
-
         if (restaurantRepository.existsByName(request.getName())){
             throw new AppException(ErrorCode.EXISTS);
         }
-
         restaurant = restaurantRepository.save(restaurant);
 
         return menuMapper.toRestaurantResponse(restaurant);
     }
 
     //GetAll
-    public List<RestaurantResponse> getAllRestaurant(){
-        return restaurantRepository.findAll().stream().map(menuMapper::toRestaurantResponse).toList();
+    public List<RestaurantDTO> getAllRestaurant(){
+        List<Restaurant> restaurants = restaurantRepository.findAll();
+
+        return restaurants.stream()
+                .map(this::restaurantDTO)
+                .collect(Collectors.toList());
     }
 
     //GetId
-    public RestaurantResponse getResById(int id){
-        return menuMapper.toRestaurantResponse(restaurantRepository.findById(id)
-                .orElseThrow(()-> new AppException(ErrorCode.NOTFOUND)));
+    public RestaurantDTO getResById(int id){
+        Restaurant restaurant =restaurantRepository.findById(id)
+                .orElseThrow(()-> new AppException(ErrorCode.NOTFOUND));
+
+        return restaurantDTO(restaurant);
     }
 
     //Update

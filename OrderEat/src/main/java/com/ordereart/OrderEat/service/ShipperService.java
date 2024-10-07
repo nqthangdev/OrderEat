@@ -1,5 +1,6 @@
 package com.ordereart.OrderEat.service;
 
+import com.ordereart.OrderEat.dto.dto.ShipperDTO;
 import com.ordereart.OrderEat.dto.request.ShipperRequest;
 import com.ordereart.OrderEat.dto.response.ShipperResponse;
 import com.ordereart.OrderEat.entity.Shipper;
@@ -28,6 +29,16 @@ public class ShipperService {
     ShipperRepository shipperRepository;
     UserRepository userRepository;
 
+    public ShipperDTO shipperDTO(Shipper shipper){
+        return new ShipperDTO(
+            shipper.getId(),
+            shipper.getName(),
+            shipper.getPhone(),
+            shipper.getEmail(),
+            shipper.getUser()
+        );
+    }
+
     //Create
     public ShipperResponse create(ShipperRequest request){
         Shipper shipper = shipperMapper.toShipper(request);
@@ -53,22 +64,25 @@ public class ShipperService {
 
     //GetAll
     @PreAuthorize("hasRole('ADMIN')")
-    public List<ShipperResponse> getAll(){
-        return shipperRepository.findAll()
-                            .stream()
-                            .map(shipperMapper::toShipperResponse)
-                            .toList();
+    public List<ShipperDTO> getAll(){
+        List<Shipper> shippers = shipperRepository.findAll();
+
+        return shippers.stream()
+                    .map(this::shipperDTO)
+                    .collect(Collectors.toList());
     }
 
     //GetById
-    public ShipperResponse getById(int id){
-        return shipperMapper.toShipperResponse(shipperRepository.findById(id)
-                        .orElseThrow(()-> new AppException(ErrorCode.NOTFOUND)));
+    public ShipperDTO getById(int id){
+        Shipper shipper = shipperRepository.findById(id)
+                        .orElseThrow(()-> new AppException(ErrorCode.NOTFOUND));
+
+        return shipperDTO(shipper);
     }
 
     //Delete
     public String delete(int id){
         shipperRepository.deleteById(id);
-        return "Total has been deleted !";
+        return "Has been deleted !";
     }
 }

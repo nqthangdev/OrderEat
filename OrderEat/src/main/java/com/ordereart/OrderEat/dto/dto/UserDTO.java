@@ -1,19 +1,16 @@
-package com.ordereart.OrderEat.dto.response;
+package com.ordereart.OrderEat.dto.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ordereart.OrderEat.dto.dto.UserDTO;
 import com.ordereart.OrderEat.entity.Restaurant;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserResponse{
+@AllArgsConstructor
+public class UserDTO {
 
     int id;
     String username;

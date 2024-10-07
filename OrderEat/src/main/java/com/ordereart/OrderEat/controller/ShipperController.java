@@ -1,5 +1,7 @@
 package com.ordereart.OrderEat.controller;
 
+import com.ordereart.OrderEat.dto.dto.ShipperDTO;
+import com.ordereart.OrderEat.dto.dto.UserDTO;
 import com.ordereart.OrderEat.dto.request.ShipperRequest;
 import com.ordereart.OrderEat.dto.response.ApiResponse;
 import com.ordereart.OrderEat.dto.response.ShipperResponse;
@@ -30,15 +32,16 @@ public class ShipperController {
 
     //GetAll
     @GetMapping
-    ApiResponse<List<ShipperResponse>> getAll(){
-        return ApiResponse.<List<ShipperResponse>>builder()
-                .result(shipperService.getAll()).build();
+    ApiResponse<List<ShipperDTO>> getAll(){
+        List<ShipperDTO> shipperDTO = shipperService.getAll();
+        return ApiResponse.<List<ShipperDTO>>builder()
+                .result(shipperDTO).build();
     }
 
     //GetById
     @GetMapping("/{shipperId}")
-    ApiResponse<ShipperResponse> getById(@PathVariable("shipperId") int id){
-        return ApiResponse.<ShipperResponse>builder()
+    ApiResponse<ShipperDTO> getById(@PathVariable("shipperId") int id){
+        return ApiResponse.<ShipperDTO>builder()
                 .result(shipperService.getById(id)).build();
     }
 
